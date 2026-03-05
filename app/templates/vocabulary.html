@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Vocabulary — Learn French{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="page-title">📚 Vocabulary</h2>
+
+  <div class="category-bar-wrapper">
+    <div class="category-bar-inner">
+      <a href="{{ url_for('main.vocabulary', category='colors') }}"
+        class="category-btn {{ 'active' if category == 'colors' else '' }}">🎨 Colors</a>
+      <a href="{{ url_for('main.vocabulary', category='numbers') }}"
+        class="category-btn {{ 'active' if category == 'numbers' else '' }}">🔢 Numbers</a>
+      <a href="{{ url_for('main.vocabulary', category='food') }}"
+        class="category-btn {{ 'active' if category == 'food' else '' }}">🍎 Food</a>
+      <a href="{{ url_for('main.vocabulary', category='animals') }}"
+        class="category-btn {{ 'active' if category == 'animals' else '' }}">🐶 Animals</a>
+      <a href="{{ url_for('main.vocabulary', category='family') }}"
+        class="category-btn {{ 'active' if category == 'family' else '' }}">👨‍👩‍👧 Family</a>
+      <a href="{{ url_for('main.vocabulary', category='seasons') }}"
+        class="category-btn {{ 'active' if category == 'seasons' else '' }}">🍂 Seasons</a>
+      <a href="{{ url_for('main.vocabulary', category='days') }}"
+        class="category-btn {{ 'active' if category == 'days' else '' }}">📅 Days</a>
+      <a href="{{ url_for('main.vocabulary', category='months') }}"
+        class="category-btn {{ 'active' if category == 'months' else '' }}">🗓️ Months</a>
+    </div>
+  </div>
+
+  <div class="vocab-container">
+    <h3>
+      {% if category == 'days' %}
+      Days of the Week
+      {% elif category == 'seasons' %}
+      Seasons
+      {% elif category == 'months' %}
+      Months
+      {% elif category %}
+      {{ category|capitalize }}
+      {% else %}
+      All
+      {% endif %}
+      Vocabulary
+    </h3>
+
+    <table class="vocab-table">
+      <thead>
+        <tr>
+          <th>French</th>
+          <th>English</th>
+          <th>Pronunciation</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for v in vocab_list %}
+        <tr>
+          <td><strong>{{ v.french }}</strong></td>
+          <td>{{ v.english }}</td>
+          <td><span class="pronunciation">{{ v.pronunciation }}</span></td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="3" class="text-center">No words found. Try another category.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

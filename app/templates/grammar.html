@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Grammar — Learn French{% endblock %}
+
+{% block content %}
+<section class="grammar-section container">
+  <h2 class="page-title">Grammar</h2>
+  <p class="lead">Learn the building blocks of French with easy examples and practice.</p>
+
+  <div class="category-bar">
+    <a href="{{ url_for('main.grammar', topic='Articles') }}" class="category-btn cat-food">📖 Articles</a>
+    <a href="{{ url_for('main.grammar', topic='Gender') }}" class="category-btn cat-numbers">🚻 Gender</a>
+    <a href="{{ url_for('main.grammar', topic='Subject Pronouns') }}" class="category-btn cat-family">👤 Subject
+      Pronouns</a>
+    <a href="{{ url_for('main.grammar', topic='Verbs') }}" class="category-btn cat-colors">✍️ Verbs</a>
+  </div>
+
+  <div class="grammar-container">
+    {% set selected_category = request.args.get('topic') %}
+    <div class="grammar-content">
+      {% for g in grammar_items %}
+      {% if not selected_category or g.title.lower() in selected_category.lower() %}
+      <div class="vocab-container" style="margin-top: 20px;">
+        <h3 style="text-align: left; border-bottom: 2px solid var(--primary-blue); padding-bottom: 5px;">{{ g.title }}
+        </h3>
+        <div style="text-align: left; padding: 15px;">{{ g.content|safe }}</div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
